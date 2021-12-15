@@ -1,0 +1,29 @@
+<!-- index.ejs-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Little Free Libraries</title>
+    </head>
+    <body>
+        <h1>Little Free Libraries of Seattle</h1>
+        <form action="/libraries" method="POST">
+            <input type="text" placeholder="Address" name="address">
+            <input type="text" placeholder="Neighborhood" name="neighborhood">
+            <button type="submit">Submit</button>
+        </form>
+        <ul class="libraries">
+            <% for(var i = 0; i < libraries.length; i++){%>
+                <li class="library">
+                    <span><%= libraries[i].address %></span>
+                    <span><%= libraries[i].neighborhood %></span>
+                </li>
+            <% } %>
+        </ul>
+        <div>
+            <h2>Update a library</h2>
+            <button id="update-button">Update</button>
+        </div>
+        <script src="/main.js"></script>
+    </body>
+</html>
