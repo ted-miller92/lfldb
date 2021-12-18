@@ -48,6 +48,35 @@ MongoClient.connect(connectionString, {useUnifiedTopology : true})
         });
         app.put('/libraries', (req, res) => {
             console.log(req.body);
+            libraryCollection.findOneAndUpdate(
+                {address: '535 14th Ave'},
+                {
+                    $set : {
+                        address: req.body.address,
+                        neighborhood: req.body.neighborhood
+                    }
+                },
+                {
+                    upsert: true
+                }
+            )
+                .then(result => {
+                    res.json('Success');
+                })
+                .catch(error => console.error(error));
+        })
+        app.delete('/libraries', (req, res) => {
+            libraryCollection.deleteOne(
+                {address: req.body.address},
+            )
+            .then(result => {
+                if (result.deletedCount === 0){
+                    return res.json('No library to delete');
+                }
+                res.json('Deleted library')
+                
+            })
+            .catch(error => console.error(error))
         })
         // app.post();
         app.listen(3000, function() {
